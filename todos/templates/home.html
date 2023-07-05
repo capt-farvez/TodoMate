@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Todo Mate</title>
+        <title>TodoMate/home</title>
     </head>
     <body >
         <div align='center' bgcolor='blue'>
             <h1> Welcome to TodoMate </h1>
         </div>
+       
+        <a href="{% url 'add-todo' %}"><button class="btn btn-primary">Add new Todo</button></a>
+        {% comment %} <form method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Add your title" name="title"/>
+            <input type="text" placeholder="Add your description" name="description"/>
+            <button type="submit"> Submit </button>
+
+        </form> {% endcomment %}
         <h1>My TODO List</h1>
         <ul>
             {% for todo in todos %}
-            <li>{{ todo.title }} <br> {{ todo.description }} <br> {{ todo.completed }}</li>
-            {% empty %}
-            <li>No todos found</li>
+                <div>
+                    <h3>{{ todo.title }}</h3>
+                    <p>{{ todo.description }}</p>
+                    <form method="POST" action="{% url 'delete-todo' todo.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                    <a href="{% url 'update-todo' todo.id %}">Update</a>
+                </div>
             {% endfor %}
         </ul>
     </body>
