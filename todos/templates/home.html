@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo Mate</title>
+    </head>
+    <body >
+        <div align='center' bgcolor='blue'>
+            <h1> Welcome to TodoMate </h1>
+        </div>
+        <h1>My TODO List</h1>
+        <ul>
+            {% for todo in todos %}
+            <li>{{ todo.title }} <br> {{ todo.description }} <br> {{ todo.completed }}</li>
+            {% empty %}
+            <li>No todos found</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
