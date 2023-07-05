@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics
 from .models import Todo
 from .serializers import TodoSerializer
@@ -12,8 +12,44 @@ class TodoListView(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         todos = self.get_queryset()
+        # print(todos)
         return render(request, 'home.html', {'todos': todos})
 
+def addTodo(request):
+    title = ""  # Default value for title
+    description = ""  # Default value for description
+
+    if request.method == 'POST':
+        print(request.POST)
+
+        title = request.POST.get("title")
+        print(title)
+        description = request.POST.get("description")
+        todos = Todo(title=title, description=description)
+        todos.save()
+        print(todos)
+        # print(Todo.objects.all())
+        return redirect('/')
+
+    return render(request, 'addNewTodo.html', {'title':title, 'description':description})
+
+def delete_todo(request, pk):
+    todos = Todo.objects.get(pk=pk)
+    todos.delete()
+    return redirect('/')
+
+def update_todo(request, pk):
+    todos = Todo.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        todos.title = title
+        todos.description = description
+        todos.save()
+        return redirect('/')
+
+    return render(request, 'update.html', {'todos': todos})
 
 @csrf_exempt
 def todos_list(request):
