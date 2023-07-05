@@ -12,10 +12,10 @@
         <form method="POST" action="">
             {% csrf_token %}
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="{{ todo.title }}" required>
+            <input type="text" id="title" name="title" value="{{ todos.title }}" required>
             <br>
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required>{{ todo.description }}</textarea>
+            <textarea id="description" name="description" required>{{ todos.description }}</textarea>
             <br>
             <input type="submit" value="Update">
         </form>
