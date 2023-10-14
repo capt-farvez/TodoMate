@@ -1,34 +1,106 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TodoMate/home</title>
-    </head>
-    <body >
-        <div align='center' bgcolor='blue'>
-            <h1> Welcome to TodoMate </h1>
-        </div>
-       
-        <a href="{% url 'add-todo' %}"><button class="btn btn-primary">Add new Todo</button></a>
-        {% comment %} <form method="POST">
-            {% csrf_token %}
-            <input type="text" placeholder="Add your title" name="title"/>
-            <input type="text" placeholder="Add your description" name="description"/>
-            <button type="submit"> Submit </button>
+<head>
+    <title>TodoMate/home</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-        </form> {% endcomment %}
-        <h1>My TODO List</h1>
-        <ul>
-            {% for todo in todos %}
-                <div>
-                    <h3>{{ todo.title }}</h3>
-                    <p>{{ todo.description }}</p>
+        .welcome-box {
+            background-color: #3498db;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .todo-list-header {
+            font-size: 24px;
+            color: #333;
+            margin: 20px;
+        }
+
+        .todo-box {
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .todo-title {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .todo-description {
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #27ae60;
+        }
+
+        .add-todo-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-todo-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-box">
+        <h1> Welcome to TodoMate </h1>
+    </div>
+    <a href="{% url 'add-todo' %}" class="add-todo-btn">Add new Todo</a>
+    <h1 class="todo-list-header">My TODO List</h1>
+    <ul>
+        {% for todo in todos %}
+            <li class="todo-box">
+                <h3 class="todo-title">{{ todo.title }}</h3>
+                <p class="todo-description">{{ todo.description }}</p>
+                <div class="btn-container">
+                    <a href="{% url 'update-todo' todo.id %}">
+                        <button class="btn btn-update">Update</button>
+                    </a>
                     <form method="POST" action="{% url 'delete-todo' todo.id %}">
                         {% csrf_token %}
-                        <button type="submit">Delete</button>
+                        <button class="btn btn-delete" type="submit">Delete</button>
                     </form>
-                    <a href="{% url 'update-todo' todo.id %}">Update</a>
                 </div>
-            {% endfor %}
-        </ul>
-    </body>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
 </html>
